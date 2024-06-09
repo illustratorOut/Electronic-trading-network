@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from products.models import Product
+from users.models import User
 
 NULLABLE = {
     'blank': True,
@@ -18,10 +20,9 @@ class Supplier(models.Model):
     street = models.CharField(max_length=100, verbose_name='Улица')
     house = models.CharField(max_length=100, verbose_name='№ дома')
 
-    # Продукты:
-    # - Название
-    # - Модель
-    # - Дата выхода продукта на рынок
+    product = models.ManyToManyField(Product, verbose_name='Продукт')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор поставщика', **NULLABLE)
+    supply = models.ForeignKey('Supplier', on_delete=models.PROTECT, verbose_name='Поставщик', **NULLABLE)
 
     levels = models.IntegerField(choices=LEVELS_CHOICES, default=LEVELS_CHOICES[0],
                                  verbose_name='Уровень структуры')

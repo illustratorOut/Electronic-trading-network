@@ -1,8 +1,11 @@
 from django.db import models
-from suppliers.models import NULLABLE
 from django.utils import timezone
-
 from users.models import User
+
+NULLABLE = {
+    'blank': True,
+    'null': True,
+}
 
 
 class Product(models.Model):

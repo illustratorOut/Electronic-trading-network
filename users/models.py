@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from suppliers.models import NULLABLE
+
+NULLABLE = {
+    'blank': True,
+    'null': True,
+}
 
 
 class User(AbstractUser):
