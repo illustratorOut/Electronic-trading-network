@@ -26,14 +26,14 @@ class Supplier(models.Model):
 
     product = models.ManyToManyField(Product, verbose_name='Продукт')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор поставщика', **NULLABLE)
-    supply = models.ForeignKey('Supplier', on_delete=models.PROTECT, verbose_name='Поставщик', **NULLABLE)
+    supply = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name='Поставщик', **NULLABLE)
 
     levels = models.IntegerField(choices=Levels.choices, default=Levels.FACTORY, verbose_name='Уровень структуры')
     debt = models.DecimalField(decimal_places=2, max_digits=20, verbose_name='Задолженность', **NULLABLE)
     creation_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
 
     def __str__(self):
-        return f'Название: ({self.title}) - Уровень структуры: ({self.levels})'
+        return f'{self.title} - Уровень структуры: ({self.levels})'
 
     class Meta:
         verbose_name = 'Поставщик'

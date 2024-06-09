@@ -20,6 +20,6 @@ class SupplierAdmin(admin.ModelAdmin):
         for supply_object in queryset:
             supply_object.debt = 0
             supply_object.save()
-        self.message_user(request, f'Задолженность перед поставщиком у выбранных объектов очищена.')
+        self.message_user(request, 'Задолженность перед поставщиком у выбранных объектов очищена.')
 
     cleanup_debt.short_description = 'Очистить задолженность'
