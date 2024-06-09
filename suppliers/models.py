@@ -9,10 +9,14 @@ NULLABLE = {
 }
 
 
+class Levels(models.IntegerChoices):
+    FACTORY = 0, 'Завод'
+    RETAIL_NETWORK = 1, 'Розничная сеть'
+    IP = 2, 'Индивидуальный предприниматель'
+
+
 class Supplier(models.Model):
     '''Модель поставщика'''
-    LEVELS_CHOICES = (('FACTORY', 0), ('RETAIL_NETWORK', 1), ('IP', 2),)
-
     title = models.CharField(max_length=150, verbose_name='Название')
     email = models.EmailField(unique=True, verbose_name='Эл. почта')
     country = models.CharField(max_length=100, verbose_name='Страна')
@@ -24,8 +28,7 @@ class Supplier(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор поставщика', **NULLABLE)
     supply = models.ForeignKey('Supplier', on_delete=models.PROTECT, verbose_name='Поставщик', **NULLABLE)
 
-    levels = models.IntegerField(choices=LEVELS_CHOICES, default=LEVELS_CHOICES[0],
-                                 verbose_name='Уровень структуры')
+    levels = models.IntegerField(choices=Levels.choices, default=Levels.FACTORY, verbose_name='Уровень структуры')
     debt = models.DecimalField(decimal_places=2, max_digits=20, verbose_name='Задолженность', **NULLABLE)
     creation_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
 
@@ -33,5 +36,5 @@ class Supplier(models.Model):
         return f'Название: ({self.title}) - Уровень структуры: ({self.levels})'
 
     class Meta:
-        verbose_name = 'Уровень поставки'
-        verbose_name_plural = 'Уровни поставки'
+        verbose_name = 'Поставщик'
+        verbose_name_plural = 'Поставщики'

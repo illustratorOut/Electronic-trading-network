@@ -1,3 +1,12 @@
 from django.contrib import admin
+from users.models import User
 
-# Register your models here.
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    '''
+    Модель пользователя
+    Фильтр по роли пользователя
+    '''
+    list_display = ('pk', 'email', 'first_name', 'phone', 'is_active', 'role',)
+    list_filter = ('role',)
