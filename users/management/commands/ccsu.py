@@ -2,11 +2,17 @@ from colorama import Fore
 from django.core.management import BaseCommand
 
 from users.models import User
+import os
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
+        if not os.path.exists('static'):
+            os.makedirs('static')
+        if not os.path.exists('media'):
+            os.makedirs('media')
+
         dict_user = {
             'user_admin': {
                 'email': 'admin@sky.pro',
